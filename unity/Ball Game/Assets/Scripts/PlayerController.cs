@@ -22,14 +22,14 @@ public class PlayerController : MonoBehaviour
             oldVelocity = rb.velocity;
             rb.velocity = Vector3.zero;
             stopped = true;
-            Debug.Log("Down, not stopped");
+            //Debug.Log("Down, not stopped");
         }
         if (Input.GetKeyUp(KeyCode.Space) && stopped)
         {
             rb.velocity = oldVelocity;
             oldVelocity = Vector3.zero;
             stopped = false;
-            Debug.Log("Up, stopped");
+            //Debug.Log("Up, stopped");
         }
     }
     //physics related code
