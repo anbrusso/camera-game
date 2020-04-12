@@ -15,4 +15,9 @@ public class WebCam : MonoBehaviour
     {
         webcam.Stop();
     }
+
+    public float getAngle()
+    {
+        return webcam.headAngle;
+    }
 }

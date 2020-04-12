@@ -861,6 +861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 121989019}
+  webcam: {fileID: 2130062696}
 --- !u!1001 &646164009
 PrefabInstance:
   m_ObjectHideFlags: 0

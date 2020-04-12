@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public float rotSpeed;
     public float gravitySpeed;
+    public GameObject webcam;
     private Vector3 gravityDir;
     private Rigidbody rb;
     private Vector3 oldVelocity;
@@ -35,6 +36,24 @@ public class PlayerController : MonoBehaviour
     //physics related code
     private void FixedUpdate()
     {
+
+        WebCam cam = webcam.GetComponent<WebCam>();
+        float angle = cam.getAngle();
+        //threshold values to prevent rotating too far.
+        if (angle > 45)
+        {
+            angle = 45;
+        }
+        if (angle < -45)
+        {
+            angle = -45;
+        }
+        //convert angle to be within 0 to 360 range.
+        if (angle < 0)
+        {
+            angle = 360 + angle;
+        }
+
 
         float rotHorizontal = Input.GetAxis("Horizontal");
         if (gravityDir.x > .5 && rotHorizontal > 0)
