@@ -17,7 +17,7 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         WebCam cam = webcam.GetComponent<WebCam>();
-        float angle = cam.getAngle();
+        float angle = cam.getAngle()*2;
         //threshold values to prevent rotating too far.
         if (angle > 45)
         {
@@ -33,8 +33,8 @@ public class CameraController : MonoBehaviour
             angle = 360 + angle;
         }
         Vector3 rotateVal = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, angle);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(rotateVal), turningRate * Time.deltaTime);
-
+        //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(rotateVal), turningRate * Time.deltaTime);
+        transform.rotation = Quaternion.Euler(rotateVal);
     }
     // LateUpdate is called once per frame -- garaunteed to run after all items (e.g. player has moved)
     void LateUpdate()

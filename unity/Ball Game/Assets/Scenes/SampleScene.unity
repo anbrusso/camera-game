@@ -304,6 +304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotSpeed: 2
   gravitySpeed: 9.8
+  camera: {fileID: 534669902}
 --- !u!54 &121989025
 Rigidbody:
   m_ObjectHideFlags: 0

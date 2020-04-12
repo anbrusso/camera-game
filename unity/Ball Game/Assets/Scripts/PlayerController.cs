@@ -6,15 +6,13 @@ public class PlayerController : MonoBehaviour
 {
     public float rotSpeed;
     public float gravitySpeed;
-    public GameObject webcam;
-    private Vector3 gravityDir;
+    public GameObject camera;
     private Rigidbody rb;
     private Vector3 oldVelocity;
     private bool stopped = false;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        gravityDir = new Vector3(0, 0, -1);
     }
     private void Update()
     {
@@ -36,26 +34,7 @@ public class PlayerController : MonoBehaviour
     //physics related code
     private void FixedUpdate()
     {
-
-        WebCam cam = webcam.GetComponent<WebCam>();
-        float angle = cam.getAngle();
-        //threshold values to prevent rotating too far.
-        if (angle > 45)
-        {
-            angle = 45;
-        }
-        if (angle < -45)
-        {
-            angle = -45;
-        }
-        //convert angle to be within 0 to 360 range.
-        if (angle < 0)
-        {
-            angle = 360 + angle;
-        }
-
-
-        float rotHorizontal = Input.GetAxis("Horizontal");
+        /*float rotHorizontal = Input.GetAxis("Horizontal");
         if (gravityDir.x > .5 && rotHorizontal > 0)
         {
             //Debug.Log("Left Limit Player");
@@ -67,10 +46,13 @@ public class PlayerController : MonoBehaviour
         else
         {
             gravityDir = Quaternion.AngleAxis(-rotSpeed * rotHorizontal, Vector3.up) * gravityDir;
-        }
+        }*/
+        Vector3 dir = Quaternion.AngleAxis(-camera.transform.eulerAngles.z, Vector3.up) * Vector3.back;
+        //Debug.Log(dir);
+
 
         if (!stopped) {
-            rb.AddForce(gravitySpeed * gravityDir);
+            rb.AddForce(gravitySpeed * dir);
         }
     }
 }
