@@ -20,4 +20,8 @@ public class WebCam : MonoBehaviour
     {
         return webcam.headAngle;
     }
+    public bool isConnected()
+    {
+        return webcam.connected;
+    }
 }

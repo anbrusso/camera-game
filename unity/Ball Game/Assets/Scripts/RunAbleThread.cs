@@ -26,6 +26,7 @@ public abstract class RunAbleThread
 
     public void Start()
     {
+
         Running = true;
         _runnerThread.Start();
     }
