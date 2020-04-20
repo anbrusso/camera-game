@@ -7,8 +7,8 @@ using UnityEngine;
 public class WebCamRequester : RunAbleThread
 {
     static TimeSpan timout = TimeSpan.FromMilliseconds(1000);
-    public float headAngle = 0;
-    public bool connected;
+    private float headAngle = 0;
+    private bool connected = false;
     protected override void Run()
     {
         while (Running)
@@ -30,23 +30,31 @@ public class WebCamRequester : RunAbleThread
                         {
                             headAngle = float.Parse(angle);
                             connected = true;
-                            Debug.Log("Connected");
+                            //Debug.Log("Connected");
                         }
                         else
                         {
                             connected = false;
-                            Debug.Log("Disconnected");
+                            //Debug.Log("Disconnected");
                         }
                     }
                 }
                 NetMQConfig.Cleanup();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 NetMQConfig.Cleanup();
                 //Debug.Log("Connection Failed.");
                 //Debug.Log(e.StackTrace);
             }
         }
+    }
+    public bool IsConnected()
+    {
+        return connected;
+    }
+    public float GetAngle()
+    {
+        return headAngle;
     }
 }

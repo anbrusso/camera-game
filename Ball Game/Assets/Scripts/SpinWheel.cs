@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpinWheel : MonoBehaviour
 {
     public  float rotateSpeed = 1;
+    public GameObject gamestate;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +16,9 @@ public class SpinWheel : MonoBehaviour
     void FixedUpdate()
     {
         Vector3 rotate = new Vector3(0,rotateSpeed,0);
-        transform.eulerAngles = transform.eulerAngles + rotate;
+        GameStateScript state = gamestate.GetComponent<GameStateScript>();
+        if (!state.IsGamePaused()) {
+            transform.eulerAngles = transform.eulerAngles + rotate;
+        }
     }
 }

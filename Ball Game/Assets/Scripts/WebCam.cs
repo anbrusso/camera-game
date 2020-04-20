@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class WebCam : MonoBehaviour
 {
-    private WebCamRequester webcam;
+    private WebCamRequester webcam = new WebCamRequester();
     void Start()
     {
-        webcam = new WebCamRequester();
         webcam.Start();
     }
 
@@ -16,12 +15,12 @@ public class WebCam : MonoBehaviour
         webcam.Stop();
     }
 
-    public float getAngle()
+    public float GetAngle()
     {
-        return webcam.headAngle;
+        return webcam.GetAngle();
     }
-    public bool isConnected()
+    public bool IsConnected()
     {
-        return webcam.connected;
+        return webcam.IsConnected();
     }
 }
