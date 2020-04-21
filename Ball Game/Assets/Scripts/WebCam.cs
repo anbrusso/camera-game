@@ -4,15 +4,37 @@ using UnityEngine;
 
 public class WebCam : MonoBehaviour
 {
-    private WebCamRequester webcam = new WebCamRequester();
-    void Start()
+    private static WebCam _instance;
+    public static WebCam Instance
     {
-        webcam.Start();
+        get
+        {
+            return _instance;
+        }
+    }
+
+    private WebCamRequester webcam;
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+            webcam = new WebCamRequester();
+            webcam.Start();
+        }
+
     }
 
     private void OnDestroy()
     {
-        webcam.Stop();
+        if (webcam != null)
+        {
+            webcam.Stop();
+        }
     }
 
     public float GetAngle()

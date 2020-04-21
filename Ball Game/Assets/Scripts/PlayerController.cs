@@ -16,15 +16,18 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !stopped)
-        {
-            FreezePlayer();
-            //Debug.Log("Down, not stopped");
-        }
-        if (Input.GetKeyUp(KeyCode.Space) && stopped)
-        {
-            UnFreezePlayer();
-            //Debug.Log("Up, stopped");
+        GameStateScript state = gamestate.GetComponent<GameStateScript>();
+        if (!state.IsGamePaused()) {
+            if (Input.GetKeyDown(KeyCode.Space) && !stopped)
+            {
+                FreezePlayer();
+                //Debug.Log("Down, not stopped");
+            }
+            if (Input.GetKeyUp(KeyCode.Space) && stopped)
+            {
+                UnFreezePlayer();
+                //Debug.Log("Up, stopped");
+            }
         }
     }
     //physics related code

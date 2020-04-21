@@ -6,7 +6,6 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public GameObject player;
-    public GameObject webcam;
     public GameObject gamestate;
     private Vector3 offset;
     public float turnUpdateSpeed;//60
@@ -21,14 +20,13 @@ public class CameraController : MonoBehaviour
     }
     private void Update()
     {
-        WebCam cam = webcam.GetComponent<WebCam>();
         GameStateScript state = gamestate.GetComponent<GameStateScript>();
 
         Vector3 rotateVal;
             //use the webcam for controls
             if (state.UseCamControls())
         {
-            float angle = cam.GetAngle() * turningRateCamera;
+            float angle = WebCam.Instance.GetAngle() * turningRateCamera;
             //threshold values to prevent rotating too far.
             if (angle > cameraLimit)
             {

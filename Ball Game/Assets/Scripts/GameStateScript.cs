@@ -7,21 +7,21 @@ public class GameStateScript : MonoBehaviour
     private bool camControls = false;
     private bool isPaused = true;
     private bool isStarting = false;
+    private bool hasEnded = false;
     public GameObject NoCamWarningText;
     public GameObject CamWarningText;
-    public GameObject webcam;
     public GameObject player;
-    public float startDelay = 0f;//2f;
+    public GameObject countdownTimer;
+    public GameObject completeLevelUI;
+    public float startDelay;//2f;
     // Start is called before the first frame update
     void Start()
     {
-        WebCam cam = webcam.GetComponent<WebCam>();
         //if cam is connected, already, we can just start the game
-        if (cam.IsConnected())
+        if (WebCam.Instance.IsConnected())
         {
             camControls = true;
-            NoCamWarningText.SetActive(false);
-            CamWarningText.SetActive(false);
+            PauseGame();
             StartGame();
         }
         else
@@ -37,12 +37,10 @@ public class GameStateScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        WebCam cam = webcam.GetComponent<WebCam>();
-
         //Debug.Log("Pause " + IsGamePaused() + " CamControls" + UseCamControls());
         if (isPaused && !isStarting){
             //Debug.Log("Paused");
-            if (cam.IsConnected())
+            if (WebCam.Instance.IsConnected())
             {
                 //Debug.Log("Camera");
                 if (!UseCamControls())
@@ -90,7 +88,7 @@ public class GameStateScript : MonoBehaviour
         else
         {
             //if the camera disconnected, then we have to pause the game and show the warning.
-            if (!cam.IsConnected() && UseCamControls())
+            if (!WebCam.Instance.IsConnected() && UseCamControls())
             {
                 //Debug.Log("Pausing Because No Camera");
                 NoCamWarningText.SetActive(true);
@@ -125,10 +123,19 @@ public class GameStateScript : MonoBehaviour
     public void StartGame()
     {
         //Debug.Log("Starting Game");
+        PlayerController play = player.GetComponent<PlayerController>();
         isStarting = true;
         NoCamWarningText.SetActive(false);
         CamWarningText.SetActive(false);
+        CountDownController cd = countdownTimer.GetComponent<CountDownController>();
+        cd.countdownDisplay.gameObject.SetActive(true);
+        cd.BeginTimer();
         Invoke("UnPauseGame", startDelay);//wait a little bit to start
+    }
+    public void CompleteLevel()
+    {
+        hasEnded = true;
+        completeLevelUI.SetActive(true);
     }
 }
 
