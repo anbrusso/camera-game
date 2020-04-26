@@ -18,15 +18,32 @@ public class PlayerController : MonoBehaviour
     {
         GameStateScript state = gamestate.GetComponent<GameStateScript>();
         if (!state.IsGamePaused()) {
-            if (Input.GetKeyDown(KeyCode.Space) && !stopped)
+            //if useing camer controls, we base what we are doing on whether their eyes are closed.
+            if (state.UseCamControls())
             {
-                FreezePlayer();
-                //Debug.Log("Down, not stopped");
+                if (WebCam.Instance.IsEyesClosed() && !stopped)
+                {
+                    FreezePlayer();
+                    //Debug.Log("Down, not stopped");
+                }
+                if (!WebCam.Instance.IsEyesClosed() && stopped)
+                {
+                    UnFreezePlayer();
+                    //Debug.Log("Up, stopped");
+                }
             }
-            if (Input.GetKeyUp(KeyCode.Space) && stopped)
+            else
             {
-                UnFreezePlayer();
-                //Debug.Log("Up, stopped");
+                if (Input.GetKeyDown(KeyCode.Space) && !stopped)
+                {
+                    FreezePlayer();
+                    //Debug.Log("Down, not stopped");
+                }
+                if (Input.GetKeyUp(KeyCode.Space) && stopped)
+                {
+                    UnFreezePlayer();
+                    //Debug.Log("Up, stopped");
+                }
             }
         }
     }

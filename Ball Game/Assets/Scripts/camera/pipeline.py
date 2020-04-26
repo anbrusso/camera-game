@@ -13,6 +13,10 @@ class ImagePipeline:
             self.filter_length = filter_length#ho w
             self.cf = cf
             self.average_filter =[0]
+            self.eye_buffer =[0]
+            self.eye_buffer_length =20
+            self.eye_threshold =2.95
+            self.eyes_closed = False
     def start(self):
         thread = Thread(target=self.__process_cf,name = self.name)
         thread.start()
@@ -51,10 +55,11 @@ class ImagePipeline:
                 eyes_closed = self.__get_eyes_closed(l_eye_hull,r_eye_hull)
     def get_angle(self):
         return np.average(self.average_filter)
-    def is_blinking(self):
+    def is_closed(self):
         return self.eyes_closed
 
     def __get_head_angle(self,l_hull,r_hull):
+        try:
             #Consider left and right eyes as reference point of orientation of face
             Ml = cv2.moments(l_hull)#left moment
             cXl = int(Ml["m10"] / Ml["m00"])
@@ -70,19 +75,33 @@ class ImagePipeline:
             if x == 0:
                 return 180
             return -math.degrees(math.atan(y/x))
+        except:
+            return 180
     def __get_eyes_closed(self,l_hull,r_hull):
-        return False
         #print("Filter" + str(np.average(average_filter)))
         #if(Ml["m00"]
-        x,y,w,h = cv2.boundingRect(l_eye_hull)
-        l_ratio = float(w)/h
-        x,y,w,h = cv2.boundingRect(r_eye_hull)
-        r_ratio = float(w)/h
-        eye_aspect = (l_ratio + r_ratio) / 2.0
-        log("Aspect:"+str(eye_aspect))
-        #if(eye_aspect < 4):
-        #    print("eyes open" + str(eye_aspect))
-        #else:
-        #    print("eyes closed" + str(eye_aspect))
+        try:
+            x,y,w,h = cv2.boundingRect(l_hull)
+            l_ratio = float(w)/h
+            x,y,w,h = cv2.boundingRect(r_hull)
+            r_ratio = float(w)/h
+            eye_aspect = (l_ratio + r_ratio) / 2.0
+            
+            #we keep a buffer so we know what happened before now
+            if len(self.eye_buffer) <= self.eye_buffer_length:
+                self.eye_buffer.append(eye_aspect)
+            else:
+                self.eye_buffer.pop(0)
+                self.eye_buffer.append(eye_aspect)
+            array = np.array(self.eye_buffer)
+            time_closed = (array > self.eye_threshold).sum()
+
+            #if over threshold 5 times in a row, consider eyes closed
+            if(time_closed > 10):
+                self.eyes_closed = True
+            else:
+                self.eyes_closed = False
+        except:
+            self.eyes_closed = False
     def kill(self):
         self.alive = False

@@ -26,6 +26,9 @@ if __name__=="__main__":
         while True:
             if cf.detected().isSet():
                 frame = cf.read()
+                cv2.putText(frame,"Angle: " + str(pipe.get_angle()), (5,40), cv2.FONT_HERSHEY_SIMPLEX, .5, 255)
+                cv2.putText(frame,"Eyes Closed: " + str(pipe.is_closed()), (5,60), cv2.FONT_HERSHEY_SIMPLEX, .5, 255)
+
                 cv2.imshow('Frame',frame)
                 key = cv2.waitKey(1) & 0xFF
     #starting in regular mode, need to start the server..
@@ -48,6 +51,9 @@ if __name__=="__main__":
                         if(message == b"a"):
                             log(pipe.get_angle())
                             socket.send(str(pipe.get_angle()).encode())
+                        elif(message == b"e"):
+                            log(pipe.is_closed())
+                            socket.send(str(pipe.is_closed()).encode())
                         else:
                             socket.send(b"u")
                         frame = cf.read()

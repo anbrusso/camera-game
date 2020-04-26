@@ -41,6 +41,11 @@ public class WebCam : MonoBehaviour
     {
         return webcam.GetAngle();
     }
+    public bool IsEyesClosed()
+    {
+        Debug.Log(webcam.IsEyesClosed());
+        return webcam.IsEyesClosed();
+    }
     public bool IsConnected()
     {
         return webcam.IsConnected();

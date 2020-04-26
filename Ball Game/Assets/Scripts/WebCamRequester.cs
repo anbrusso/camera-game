@@ -8,6 +8,7 @@ public class WebCamRequester : RunAbleThread
 {
     static TimeSpan timout = TimeSpan.FromMilliseconds(1000);
     private float headAngle = 0;
+    private bool is_eyes_closed = false;
     private bool connected = false;
     protected override void Run()
     {
@@ -21,6 +22,7 @@ public class WebCamRequester : RunAbleThread
                 using (RequestSocket client = new RequestSocket())
                 {
                     string angle = null;
+                    string eyes_closed = null;
                     client.Connect("tcp://localhost:5555");//connect to server
                                                             //repeatedly send/receive packets to the server to get the angle.
                     while (Running)
@@ -29,7 +31,12 @@ public class WebCamRequester : RunAbleThread
                         if (client.TrySendFrame("a") && client.TryReceiveFrameString(timout, out angle) && Running)
                         {
                             headAngle = float.Parse(angle);
-                            connected = true;
+                            //ask for whether the eyes are closed
+                            if (client.TrySendFrame("e") && client.TryReceiveFrameString(timout, out eyes_closed) && Running)
+                            {
+                                is_eyes_closed = bool.Parse(eyes_closed);
+                                connected = true;
+                            }
                             //Debug.Log("Connected");
                         }
                         else
@@ -56,5 +63,9 @@ public class WebCamRequester : RunAbleThread
     public float GetAngle()
     {
         return headAngle;
+    }
+    public bool IsEyesClosed()
+    {
+        return is_eyes_closed;
     }
 }
