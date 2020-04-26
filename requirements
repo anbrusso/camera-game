@@ -1,0 +1,4 @@
+dlib==19.19.0
+numpy==1.18.3
+opencv-python==4.2.0.34
+pyzmq==19.0.0
