@@ -5,7 +5,7 @@ import numpy as np
 import math
 import os
 from debug import *
-#Threaded Camera feed that buffers in each frame, instead of blocking reads (I/O is slow)
+#Threaded image pipeline, takes in the camera feed as a parameter, and while the feed is open it processes available frames.
 class ImagePipeline:
     def __init__(self, cf, filter_length =2,name = "ImagePipeline"):
             self.name = name
@@ -74,11 +74,12 @@ class ImagePipeline:
         return False
         #print("Filter" + str(np.average(average_filter)))
         #if(Ml["m00"]
-        #x,y,w,h = cv2.boundingRect(l_eye_hull)
-        #l_ratio = float(w)/h
-        #x,y,w,h = cv2.boundingRect(r_eye_hull)
-        #r_ratio = float(w)/h
-        #eye_aspect = (l_ratio + r_ratio) / 2.0
+        x,y,w,h = cv2.boundingRect(l_eye_hull)
+        l_ratio = float(w)/h
+        x,y,w,h = cv2.boundingRect(r_eye_hull)
+        r_ratio = float(w)/h
+        eye_aspect = (l_ratio + r_ratio) / 2.0
+        log("Aspect:"+str(eye_aspect))
         #if(eye_aspect < 4):
         #    print("eyes open" + str(eye_aspect))
         #else:
