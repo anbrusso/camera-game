@@ -1,9 +1,9 @@
-A proof of concept for a webcam based game written in the Unity engine, which image processing done in Python using OpenCV/Dlib
+A proof of concept for a webcam based game written in the Unity engine, which image processing done in Python using OpenCV/Dlib. The camera detection/python code is located in: [camera-game/Ball Game/Assets/Scripts/camera](https://bitbucket.org/albrusso/camera-game/src/e17e89411390/Ball%20Game/Assets/Scripts/camera/). The scripts running in the unity engine (C#) are in: [camera-game/Ball Game/Assets/Scripts](https://bitbucket.org/albrusso/camera-game/src/e17e89411390/Ball%20Game/Assets/Scripts/)
 
 To Run:
 
 1. Install python for windows: https://www.python.org/downloads/windows/
-2. Ensure that your python path is set properly, so that running python -version works. This was created with python 3.8.1
+2. Ensure that your python PATH environment variable is set properly, so that running python -version works correctly. This was created and tested with python 3.8.1.
 3. Install the requirements in requirements.txt (preferrably, inside a virtual environment): pip install -r requirements.txt
 4. Open the folder Ball Game in Unity.
 
