@@ -1,6 +1,6 @@
 # [Unity Camera Game](https://andrew.brusso.me/projects/a-face-detection-based-unity-game)
 
-A proof of concept for a webcam based game written in the Unity engine, with image processing done in Python using OpenCV/Dlib. The camera detection/python code is located in: [camera-game/Ball Game/Assets/Scripts/camera](https://bitbucket.org/albrusso/camera-game/src/e17e89411390/Ball%20Game/Assets/Scripts/camera/). The scripts running in the unity engine (C#) are in: [camera-game/Ball Game/Assets/Scripts](https://bitbucket.org/albrusso/camera-game/src/e17e89411390/Ball%20Game/Assets/Scripts/)
+A proof of concept for a webcam based game written in the Unity engine, with image processing done in Python using OpenCV/Dlib. The camera detection/python code is located in: [Ball Game/Assets/Scripts/camera/](https://github.com/anbrusso/camera-game/tree/master/Ball%20Game/Assets/Scripts/camera). The scripts running in the unity engine (C#) are in: [camera-game/Ball Game/Assets/Scripts](https://github.com/anbrusso/camera-game/tree/master/Ball%20Game/Assets/Scripts)
 
 To Run:
 
